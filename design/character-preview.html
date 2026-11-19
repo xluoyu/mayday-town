@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="zh-CN">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>卜卜角色动态预览</title>
+<style>body{margin:0;background:#142c39;color:#f4e8cf;font:15px "Microsoft YaHei",sans-serif;display:grid;place-items:center;min-height:100vh}main{max-width:920px;padding:24px}h1{font-size:22px;font-weight:500}p{color:#b9cdce;line-height:1.8}canvas{width:100%;max-width:880px;height:auto;border-radius:20px}a{color:#f1ce8b}</style></head>
+<body><main><h1>卜卜的 3/4 侧视角</h1><p>左前、右前、左后、右后四个朝向，沿固定道路移动时自动切换。</p><canvas id="preview" width="880" height="640"></canvas><p><a href="/">回到小镇</a></p></main>
+<script type="module">
+const canvas=document.querySelector('canvas');
+const ctx=canvas.getContext('2d');
+const sheet=new Image();
+const origins=[[303.5,567],[315,567],[303.5,568],[320.5,569]];
+const labels=['左前 3/4','右前 3/4','左后 3/4','右后 3/4'];
+let manual=false;
+window.renderPreview=function(time){
+  ctx.fillStyle='#183541';ctx.fillRect(0,0,880,640);
+  for(let i=0;i<4;i++){
+    const cx=(i%2)*440+220,baseline=Math.floor(i/2)*320+256;
+    const phase=(time%800)/800;
+    const lift=Math.sin(phase*Math.PI)*26;
+    const stretch=1+Math.sin(phase*Math.PI)*0.035;
+    ctx.fillStyle='#0b252f';ctx.beginPath();ctx.ellipse(cx,baseline+1,62-lift*0.35,14-lift*0.1,0,0,Math.PI*2);ctx.fill();
+    ctx.save();ctx.translate(cx,baseline-lift);ctx.scale(0.37/stretch,0.37*stretch);
+    ctx.drawImage(sheet,(i%2)*627,Math.floor(i/2)*627,627,627,-origins[i][0],-origins[i][1],627,627);ctx.restore();
+    ctx.fillStyle='#f0dfb8';ctx.font='16px Microsoft YaHei';ctx.textAlign='center';ctx.fillText(labels[i],cx,baseline+40);
+  }
+};
+sheet.onload=()=>{window.previewReady=true;requestAnimationFrame(function animate(t){if(!manual)window.renderPreview(t);requestAnimationFrame(animate);});};
+window.setManualPreview=()=>{manual=true;};
+sheet.src='/assets/characters/bubu-turnaround-v1.png';
+</script></body></html>

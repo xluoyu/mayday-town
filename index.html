@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#063042" />
+    <title>卜卜的圣诞小镇</title>
+  </head>
+  <body>
+    <main id="app">
+      <canvas id="scene-backdrop" aria-hidden="true"></canvas>
+      <div
+        id="game"
+        aria-label="卜卜的圣诞小镇，点击道路移动，点击小屋或圣诞树互动"
+      ></div>
+      <canvas id="snowfall" aria-hidden="true"></canvas>
+      <header class="topbar">
+        <div>
+          <span class="eyebrow">中央小镇</span>
+          <h1>卜卜的圣诞小镇</h1>
+        </div>
+        <div class="header-actions">
+          <button id="play-smile" type="button">不要欺负玛莎</button>
+          <button
+            id="toggle-roads"
+            type="button"
+            aria-pressed="false"
+            title="绿色区域表示可点击道路与广场，数字用于定位路段"
+          >
+            显示道路
+          </button>
+          <a href="/design/scenes.html">场景总览</a
+          ><button id="help" class="round-button" aria-label="查看操作说明">
+            ?
+          </button>
+        </div>
+      </header>
+      <nav id="areas" aria-label="切换区域"></nav>
+      <dialog id="modal" aria-labelledby="modal-title">
+        <button id="close" aria-label="关闭弹窗">×</button
+        ><span id="modal-icon" class="modal-icon"></span>
+        <h2 id="modal-title"></h2>
+        <p id="modal-description"></p>
+        <div id="modal-body"></div>
+        <button id="return" class="primary">回到小镇</button>
+      </dialog>
+    </main>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
